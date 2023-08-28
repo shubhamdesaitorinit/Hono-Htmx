@@ -16,7 +16,7 @@ export const AppLayout = ({ children, description, title }: LayoutProps) => {
         <script src="https://unpkg.com/hyperscript.org@0.9.9"></script>
         <link rel="stylesheet" href="${cssUrl}" />
         <link rel="shortcut icon" href="/assets/favicon.ico" />
-        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="/app.css" rel="stylesheet" />
       </head>
       <body>
         <turbo-frame id="main"> ${children} </turbo-frame>

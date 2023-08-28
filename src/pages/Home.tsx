@@ -16,10 +16,9 @@ export const Home = async (context: ContextType) => {
           <Header />
           <div class="w-full abosolute t-[56px] flex justify-center p-3 flex-col items-center">
             <div class=" flex flex-col gap-2 w-4/5">
-              <h3 class="bg-gray-800	text-white	p-2 text-center rounded-lg">
+              <span class="bg-gray-800	text-white	p-2 text-center rounded-lg">
                 Todo
-              </h3>
-              <p>Create todo</p>
+              </span>
               <NewTodoForm />
               <TodoList projectId={Number(projectId)} list={todo} />
               <div id="todo"></div>

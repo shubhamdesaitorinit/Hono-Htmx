@@ -14,11 +14,7 @@ export const TodoItem = ({ todo }: { todo: Todo }) => {
           checked={!!todo.done}
           aria-label="Complete-Check"
         />
-        <p
-          class={`${todo.done && "line-through hover:line-through"} self-start`}
-        >
-          {todo.name}
-        </p>
+        <span class="self-start text-base ">{todo.name}</span>
       </div>
       <div class="flex gap-3">
         <button
