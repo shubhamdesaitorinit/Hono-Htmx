@@ -8,6 +8,8 @@ export const NewTodoForm = () => (
   >
     <div class=" w-3/5">
       <input
+        aria-label="Create-Todo"
+        id="todo-input"
         placeholder="Todo.."
         name="name"
         type="text"

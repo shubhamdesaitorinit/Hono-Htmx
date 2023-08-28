@@ -21,7 +21,7 @@ app.use("*", AppLayoutHandler);
 app.get("/", view(Home));
 app.patch("/update/:todoId", view(UpdateTodoState));
 app.put("/todo/:todoId", view(UpdateTodo));
-app.get("/todo/:todoId/edit", view(EditTodo));
+app.post("/todo/:todoId/edit", view(EditTodo));
 
 app.post(
   "/todo",

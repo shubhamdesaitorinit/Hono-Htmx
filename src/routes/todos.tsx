@@ -2,16 +2,24 @@ import { HtmlEscapedString } from "hono/utils/html";
 import { ContextType } from "../types";
 import { TodoItem } from "../components/TodoList/TodoList";
 import { Todo } from "../components/TodoList/types";
-import { NewTodoForm } from "../components/NewTodoFrom";
 
 export const CreateTodo = async (c: any) => {
   const { name } = c?.req?.valid("form");
-  const id = crypto.randomUUID();
-  await c.env.DB.prepare(`INSERT INTO todos(id, name, done) VALUES(?, ?, ?);`)
-    .bind(Number(id), name, 0)
+  const newTodo = await c.env.DB.prepare(
+    `INSERT INTO todos( name, done) VALUES( ?, ?)  RETURNING *;`
+  )
+    .bind(name, 0)
     .run();
-  const todo = { id: Number(id), name, done: 0 };
-  return c.html(<TodoItem todo={todo} />);
+
+  const todo = newTodo.results[0];
+  return c.html(
+    <div
+      id={`main-div${todo.id}`}
+      class="w-full flex justify-between bg-gray-200 p-2"
+    >
+      <TodoItem todo={todo} />
+    </div>
+  );
 };
 
 export const deleteTodo = async (c: any) => {
@@ -46,31 +54,35 @@ export const EditTodo = async (
     .first()) as Todo;
 
   return (
-    <form
-      action={`/todo/${todo.id}`}
-      method="put"
-      hx-push-url="true"
-      hx-target={`#todo${todo.id}`}
-      _="on htmx:afterRequest reset() me"
-      class="m-0 p-0 flex w-full  gap-2"
-      hx-boost="true"
-    >
-      <div class=" w-3/5">
-        <input
-          placeholder="Todo.."
-          name="name"
-          value={todo.name}
-          type="text"
-          class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg "
-        />
-      </div>
-      <button
-        class="w-2/5 text-white bg-blue-700 hover:bg-blue-800 rounded-lg m-[4px] p-0 text-center"
-        type="submit"
+    <div id={`vieweditTodoFrom`}>
+      <form
+        id={`edit-from${todo.id}`}
+        action={`/todo/${todo.id}`}
+        method="put"
+        hx-target={`#todo${todo.id}`}
+        class="m-0 p-0 flex w-full  gap-2"
+        _="on submit remove me"
+        hx-boost="true"
+        hx-push-url="false"
       >
-        save
-      </button>
-    </form>
+        <div class=" w-3/5">
+          <input
+            id="todo-input-edit"
+            placeholder="Todo.."
+            name="name"
+            value={todo.name}
+            type="text"
+            class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg "
+          />
+        </div>
+        <button
+          class="w-2/5 text-white bg-blue-700 hover:bg-blue-800 rounded-lg m-[4px] p-0 text-center"
+          type="submit"
+        >
+          save
+        </button>
+      </form>
+    </div>
   );
 };
 

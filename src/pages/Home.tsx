@@ -3,6 +3,7 @@ import { ContextType } from "../types";
 import { getTodos } from "../controllers/todos/getTodos";
 import { Todo } from "../components/TodoList/types";
 import { NewTodoForm } from "../components/NewTodoFrom";
+import Header from "../components/Header";
 
 export const Home = async (context: ContextType) => {
   try {
@@ -12,6 +13,7 @@ export const Home = async (context: ContextType) => {
     return (
       <div>
         <main class="w-full">
+          <Header />
           <div class="w-full abosolute t-[56px] flex justify-center p-3 flex-col items-center">
             <div class=" flex flex-col gap-2 w-4/5">
               <h3 class="bg-gray-800	text-white	p-2 text-center rounded-lg">
