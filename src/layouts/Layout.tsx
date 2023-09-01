@@ -12,8 +12,6 @@ export const AppLayout = ({ children, description, title }: LayoutProps) => {
         <meta name="description" content="${description}" />
         <title>${title}</title>
         <link rel="preload" href="${cssUrl}" as="style" />
-        <script src="https://unpkg.com/htmx.org@1.9.3"></script>
-        <script src="https://unpkg.com/hyperscript.org@0.9.9"></script>
         <link rel="stylesheet" href="${cssUrl}" />
         <link rel="shortcut icon" href="/assets/favicon.ico" />
         <link href="/app.css" rel="stylesheet" />

@@ -4,22 +4,22 @@ import { TodoItem } from "../components/TodoList/TodoList";
 import { Todo } from "../components/TodoList/types";
 
 export const CreateTodo = async (c: any) => {
-  const { name } = c?.req?.valid("form");
-  const newTodo = await c.env.DB.prepare(
+  const resBody = await c.req.text();
+  const parsedBody = await JSON.parse(resBody);
+  const newTod = await c.env.DB.prepare(
     `INSERT INTO todos( name, done) VALUES( ?, ?)  RETURNING *;`
   )
-    .bind(name, 0)
+
+    .bind(parsedBody?.name, 0)
     .run();
 
-  const todo = newTodo.results[0];
-  return c.html(
-    <div
-      id={`main-div${todo.id}`}
-      class="w-full flex justify-between bg-gray-200 p-2"
-    >
-      <TodoItem todo={todo} />
+  const newTodo = newTod.results[0];
+  const data = c.html(
+    <div id="res-todo" class="w-full flex justify-between bg-gray-200 p-2">
+      <TodoItem todo={newTodo} />
     </div>
   );
+  return data;
 };
 
 export const deleteTodo = async (c: any) => {
@@ -61,7 +61,6 @@ export const EditTodo = async (
         method="put"
         hx-target={`#todo${todo.id}`}
         class="m-0 p-0 flex w-full  gap-2"
-        _="on submit remove me"
         hx-boost="true"
         hx-push-url="false"
       >
@@ -69,7 +68,7 @@ export const EditTodo = async (
           <input
             id="todo-input-edit"
             placeholder="Todo.."
-            name="name"
+            todo="name"
             value={todo.name}
             type="text"
             class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg "
