@@ -41,7 +41,7 @@ export const TodoItem = ({ todo }: { todo: Todo }) => {
 const TodoList = ({ projectId, list }: { projectId: number; list: Todo[] }) => {
   return (
     <div class="flex flex-col">
-      <div id="todo-list" class="flex flex-col gap-3">
+      <div class="flex flex-col gap-3">
         {list?.map((todo: Todo) => {
           return (
             <div

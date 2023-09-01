@@ -20,7 +20,7 @@ const addTodo = html`<script>
       const parser = new DOMParser();
       const doc = parser.parseFromString(responseHTML, "text/html");
 
-      const resTodoElement = doc.getElementById("res-todo");
+      const resTodoElement = doc.getElementsByName("newCreatedTodo")[0];
       if (resTodoElement) {
         todoEl.appendChild(resTodoElement.cloneNode(true));
       }

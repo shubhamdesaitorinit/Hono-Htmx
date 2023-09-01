@@ -4,22 +4,22 @@ import { TodoItem } from "../components/TodoList/TodoList";
 import { Todo } from "../components/TodoList/types";
 
 export const CreateTodo = async (c: any) => {
-  const resBody = await c.req.text();
-  const parsedBody = await JSON.parse(resBody);
-  const newTod = await c.env.DB.prepare(
+  const { name } = c?.req?.valid("form");
+  const newTodo = await c.env.DB.prepare(
     `INSERT INTO todos( name, done) VALUES( ?, ?)  RETURNING *;`
   )
-
-    .bind(parsedBody?.name, 0)
+    .bind(name, 0)
     .run();
 
-  const newTodo = newTod.results[0];
-  const data = c.html(
-    <div id="res-todo" class="w-full flex justify-between bg-gray-200 p-2">
-      <TodoItem todo={newTodo} />
+  const todo = newTodo.results[0];
+  return c.html(
+    <div
+      id={`main-div${todo.id}`}
+      class="w-full flex justify-between bg-gray-200 p-2"
+    >
+      <TodoItem todo={todo} />
     </div>
   );
-  return data;
 };
 
 export const deleteTodo = async (c: any) => {
@@ -64,18 +64,18 @@ export const EditTodo = async (
         hx-boost="true"
         hx-push-url="false"
       >
-        <div class=" w-3/5">
+        <div class=" w-60">
           <input
             id="todo-input-edit"
             placeholder="Todo.."
-            todo="name"
+            name="name"
             value={todo.name}
             type="text"
-            class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg "
+            class="w-full p-1 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg "
           />
         </div>
         <button
-          class="w-2/5 text-white bg-blue-700 hover:bg-blue-800 rounded-lg m-[4px] p-0 text-center"
+          class="w-40 text-white bg-blue-700 hover:bg-blue-800 rounded-lg m-4px p-0 text-center"
           type="submit"
         >
           save

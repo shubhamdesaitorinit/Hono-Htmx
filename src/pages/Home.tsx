@@ -14,15 +14,15 @@ export const Home = async (context: ContextType) => {
       <div>
         <main class="w-full">
           <Header />
-          <div class="w-full abosolute t-[56px] flex justify-center p-3 flex-col items-center">
-            <div class=" flex flex-col gap-2 w-4/5">
+          <div class="w-full abosolute t-56px flex justify-center p-3 flex-col items-center">
+            <div class=" flex flex-col gap-2 w-80">
               <span class="bg-gray-800	text-white	p-2 text-center rounded-lg">
                 Todo
               </span>
               <NewTodoForm />
               <TodoList projectId={Number(projectId)} list={todo} />
               <div id="todo"></div>
-              <div id="vieweditTodoFrom" class="w-1/2"></div>
+              <div id="vieweditTodoFrom" class="w-50"></div>
             </div>
           </div>
         </main>

@@ -1,11 +1,11 @@
 {
   "scripts": {
-    "dev": "wrangler dev dist/worker/index.mjs --local --assets ./public --log-level --remote",
+    "dev": "wrangler dev  --local --assets ./public --log-level --remote",
     "dev:css": "tailwindcss -i ./src/index.css -o ./public/app.css --watch",
     "build:client": "vite build",
     "build:worker": "vite build --ssr src/index.tsx --config vite.config.worker.js",
     "build": "run-p build:*",
-    "deploy": "tailwindcss -i ./src/index.css -o ./public/app.css --minify && wrangler deploy --assets ./public dist/worker/index.mjs"
+    "deploy": "tailwindcss -i ./src/index.css -o ./public/app.css --minify && wrangler deploy --assets ./public"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.1.8",

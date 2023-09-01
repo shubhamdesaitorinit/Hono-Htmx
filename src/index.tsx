@@ -23,7 +23,16 @@ app.patch("/update/:todoId", view(UpdateTodoState));
 app.put("/todo/:todoId", view(UpdateTodo));
 app.post("/todo/:todoId/edit", view(EditTodo));
 
-app.post("/todo", CreateTodo);
+app.post(
+  "/todo",
+  zValidator(
+    "form",
+    z.object({
+      name: z.string().min(1),
+    })
+  ),
+  CreateTodo
+);
 
 app.delete("/todo/:id", deleteTodo);
 
